@@ -1,37 +1,59 @@
 import { PureComponent } from 'react';
 
-export default class ProgressBar extends PureComponent {
+import '../styles/ProgressBar.styles.scss';
+
+class ProgressBar extends PureComponent {
 	render() {
-		const { steps, currentStep } = this.props;
-		// commit test
+		const { steps, checkoutStep } = this.props;
+		const success = checkoutStep === steps[steps.length - 1].name;
 		return (
-			<div className='progressbar'>
-				<div className='progressbar-list'>
-					{steps.map((item, index) => {
+			<div className='progress-bar'>
+				{steps &&
+					steps.map((item, index) => {
 						if (steps.length - 1 === index) {
 							return;
 						}
+						const className = item.displayValue.toLowerCase();
 						return (
-							<div
-								className={
-									currentStep === item.name
-										? 'active progressbar-item'
-										: 'progressbar-item'
-								}
-								key={item.name}
-							>
-								<span className='progressbar-item-count'>
-									<span className='count'>{index + 1}</span>
-									<span className='checksign'></span>
-								</span>
-								<span className='progressbar-item-label'>
-									{item.displayValue}
-								</span>
-							</div>
+							<>
+								<div
+									className={`${className}-bar-container ${
+										item.name === checkoutStep || success ? 'active' : ''
+									}`}
+								>
+									<div
+										className={`${className}-bar ${
+											item.name === checkoutStep || success ? 'active' : ''
+										}`}
+									/>
+								</div>
+								<div className={`${className}-container`}>
+									<div
+										className={`${className}-info ${
+											item.name === checkoutStep || success ? 'active' : ''
+										}`}
+									>
+										<span
+											className={`${className}-count ${
+												item.name === checkoutStep || success ? 'active' : ''
+											}`}
+										>
+											{index + 1}
+										</span>
+										<span className={`${className}-label`}>
+											{item.displayValue}
+										</span>
+									</div>
+								</div>
+							</>
 						);
 					})}
+				<div className={`success-bar-container ${success ? 'active' : ''}`}>
+					<div className={`success-bar ${success ? 'active' : ''}`} />
 				</div>
 			</div>
 		);
 	}
 }
+
+export default ProgressBar;
