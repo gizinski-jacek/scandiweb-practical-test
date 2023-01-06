@@ -49,5 +49,9 @@
 	},
 	"devDependencies": {
 		"@types/styled-components": "^5.1.26"
+	},
+	"engines": {
+		"node": "14.21.2",
+		"npm": "6.14.7"
 	}
 }
