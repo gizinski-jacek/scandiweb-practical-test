@@ -1,17 +1,25 @@
 import { Checkout as SourceCheckout } from 'SourceRoute/Checkout/Checkout.component';
-import Progressbar from 'src/components/Progressbar';
-import './Checkout.extension.style.scss';
-import ContentWrapper from 'Component/ContentWrapper';
+import ContentWrapper from '@scandipwa/scandipwa/src/component/ContentWrapper';
+import './Checkout.extension.style';
+import ProgressBar from 'src/components/ProgressBar';
 
 class Checkout extends SourceCheckout {
+	componentDidUpdate() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		});
+	}
+
 	renderProgressbar() {
 		const { checkoutStep } = this.props;
 
 		const steps = Object.entries(this.stepMap).map((item) => {
 			return { name: item[0], displayValue: item[1].title.value.split(' ')[0] };
 		});
-		return <Progressbar steps={steps} currentStep={checkoutStep} />;
+		return <ProgressBar steps={steps} checkoutStep={checkoutStep} />;
 	}
+
 	render() {
 		return (
 			<main block='Checkout'>
